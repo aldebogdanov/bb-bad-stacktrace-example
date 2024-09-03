@@ -1,0 +1,15 @@
+{:paths ["src"]
+ :tasks
+ {eftest {:doc "Run tests with eftest runner"
+          :extra-paths ["test"]
+          :extra-deps {eftest/eftest {:mvn/version "0.6.0"}}
+          :requires ([eftest.runner :as eftest])
+          :task (eftest/run-tests
+                  (eftest/find-tests "test")
+                  {:multithread? false
+                   :report eftest.report.progress/report})}
+  test {:doc "Run tests"
+        :extra-paths ["test"]
+        :requires ([clojure.test :as t]
+                   [example.core-test])
+        :task (t/run-tests 'example.core-test)}}}
